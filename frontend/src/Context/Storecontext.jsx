@@ -21,23 +21,13 @@ export const StoreContextProvider = (props) => {
         setCardItems(prev => ({ ...prev, [itemId]: prev[itemId] - 1 }))
 
     }
-        
+
     const getTotalCartAmount = () => {
         let totalAmount = 0;
-        for (const item in cardItems) {
-
-            if (cardItems[item] > 0) {
-                
-                let itemInfo = food_list.find((product) => product._id == item);
-                console.log(itemInfo);
-                totalAmount += Number(item.price) * cardItems[item._id];
-                /**try item just instead id */
-
-            }
-
-
+        for (const [key, val] in cardItems) {
+            let price = food_list.find((item) => item._id == key);
+            totalAmount += Number(price.price) * cardItems[key];
         }
-        console.log(totalAmount);
         return totalAmount;
     }
     const contextValue = {
@@ -49,8 +39,8 @@ export const StoreContextProvider = (props) => {
         getTotalCartAmount
 
     }
-   
-        
+
+
     return (
         <StoreContext.Provider value={contextValue}>
             {props.children}
