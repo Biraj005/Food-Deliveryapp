@@ -1,12 +1,21 @@
 import React, { useContext, useState } from 'react'
 import { assets } from '../../assets/assets'
 import './Navbar.css'
-import { Link } from 'react-router-dom'
-import { StoreContext} from '../../Context/Storecontext';
+import { Link, useNavigate } from 'react-router-dom'
+import { StoreContext } from '../../Context/Storecontext';
 
-function Navbar({ setShowLogin }) {
+function Navbar({  setShowLogin }) {
+  const navigate = useNavigate();
+
   const [menu, setMenu] = useState('Home');
-  const { getTotalCartAmount} = useContext(StoreContext);
+  const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
+
+  const Logout = () => {
+    localStorage.removeItem('token');
+    setToken("");
+    navigate("/")
+
+  }
 
 
   return (
@@ -22,12 +31,22 @@ function Navbar({ setShowLogin }) {
       </ul>
 
       <div className="nav-bar-right">
-          <img className='nav-search' src={assets.search_icon} alt="search" />
-          <div className="nav-bar-search-icon">
-            <Link to='/cart'>  <img className="bag" src={assets.bag_icon} alt="" /> </Link>
-            <div className={getTotalCartAmount()===0?'':'dot'}></div>
-          </div>
-          <button onClick={() => setShowLogin(true)}>sign in</button>
+        <img className='nav-search' src={assets.search_icon} alt="search" />
+        <div className="nav-bar-search-icon">
+          <Link to='/cart'>  <img className="bag" src={assets.bag_icon} alt="" /> </Link>
+          <div className={getTotalCartAmount() === 0 ? '' : 'dot'}></div>
+        </div>
+        {
+          !token ? <button onClick={() => setShowLogin(true)}>sign in</button> :
+            <div className='navbar-profile'>
+              <img src={assets.profile_icon} alt="profile" />
+              <ul className="nav-profile-dropdown">
+                <li><img src={assets.bag_icon} /><p>Orders</p></li>
+                <hr />
+                <li><img onClick={() => Logout()} src={assets.logout_icon} alt="" /><p>Logout</p></li>
+              </ul>
+            </div>
+        }
       </div>
 
     </div>

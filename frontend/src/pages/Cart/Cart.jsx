@@ -10,6 +10,7 @@ function Cart() {
     addToCart,
     removeFromCart,
     getTotalCartAmount,
+    url
   } = useContext(StoreContext);
 
   const deliveryFee = 2;
@@ -36,7 +37,7 @@ function Cart() {
             return (
               <div key={item._id}>
                 <div className="card-item-title card-item-items">
-                  <img src={item.image} alt={item.name} />
+                  <img src={url+"/images/"+item.image} alt={item.name} />
                   <p>{item.name}</p>
                   <p>${Number(item.price).toFixed(2)}</p>
                   <p>{cardItems[item._id]}</p>
