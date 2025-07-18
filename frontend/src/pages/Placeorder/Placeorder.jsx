@@ -4,6 +4,8 @@ import { useState } from 'react'
 import { StoreContext } from '../../Context/Storecontext'
 import { useContext } from 'react'
 import axios from 'axios'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 function Placeorder() {
 
   const { food_list,
@@ -48,6 +50,7 @@ function Placeorder() {
         orderItems.push(itemInfo);
       }
     })
+    console.log(orderItems);
     let orderData = {
       address:data,
       item:orderItems,
@@ -64,6 +67,16 @@ function Placeorder() {
       alert("Error");
     }
   }
+  const navigate = useNavigate();
+  useEffect(()=>{
+
+     if(!token){
+         navigate("/cart");
+     }else if(getTotalCartAmount()==0){
+              navigate("/cart");
+     }
+
+  },[token])
 
   const deliveryFee = 2;
   const subtotal = getTotalCartAmount();

@@ -7,6 +7,7 @@ import Footer from './components/Footer/Footer'
 import { useState } from 'react'
 import LogInPopup from './components/LogIn/LogInPopup'
 import Verify from './pages/Verify/Verify'
+import MyOrders from './pages/Myorders/MyOrders'
 
 function App() {
   const [showLogin,setShowLogin] = useState(false);
@@ -21,6 +22,7 @@ function App() {
          <Route path='/cart' element={<Cart/>}/>
          <Route path='/order' element={<Placeorder/>} />
          <Route path='/verify' element={<Verify/>}/>
+         <Route path='/myorders' element={<MyOrders/>}/>
       </Routes>
 
     </div>
